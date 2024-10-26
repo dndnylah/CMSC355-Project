@@ -3,6 +3,7 @@ const firstname_input = document.getElementById('firstname-input')
 const email_input = document.getElementById('email-input')
 const password_input = document.getElementById('password-input')
 const repeat_password_input = document.getElementById('repeat-password-input')
+const error_message = document.getElementById('error-message')
 
 form.addEventListener('submit', (e) => {
     // e.preventDefault()
@@ -18,6 +19,7 @@ form.addEventListener('submit', (e) => {
 
     if (errors.length > 0){
         e.preventDefault()
+        error_message.innerText = errors.join(". ")
     }
 })
 
@@ -28,18 +30,29 @@ function getSignupFormErrors(firstname, email, password, repeatPassword){
         errors.push('Firstname is required')
         firstname_input.parentElement.classList.add('incorrect')
     }
-    if(firstname === '' || email == null){
+    if(email === '' || email == null){
         errors.push('Email is required')
         email_input.parentElement.classList.add('incorrect')
     }
-    if(firstname === '' || password == null){
+    if(password === '' || password == null){
         errors.push('Password is required')
         password_input.parentElement.classList.add('incorrect')
     }
-    if(firstname === '' || repeatPassword == null){
-        errors.push('Repeating your password is required')
+    if(password !== ''){
+        errors.push('Password does not match repeeated password')
         repeat_password_input.parentElement.classList.add('incorrect')
     }
 
     return errors;
 }
+
+const allInputs = [firstname_input, email_input, password_input, repeat_password_input]
+
+allInputs.forEach(input => {
+    input.addEventListener('input', () => {
+        if(input.parentElement.classList.contains('incorrect')){
+            input.parentElement.classList.remove('incorrect')
+            error_message.innerText = ' '
+        }
+    })
+})
