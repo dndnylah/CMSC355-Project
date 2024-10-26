@@ -97,10 +97,11 @@ p{
 a{
     color: #4f877e;
 }
-.incorrect label{
-    background-color: #A52424;
+form div.incorrect label{
+    background-color: #FFFFFF;
 }
-.incorrect input{
-    border-color: #A52424;
+
+form div.incorrect input{
+    border-color: #FFFFFF;
 }
 
