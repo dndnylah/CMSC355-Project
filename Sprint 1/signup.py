@@ -1,8 +1,7 @@
 import re
 import datetime
 import database
-
-
+import base
 
 current_year = datetime.datetime.now().year
 
@@ -17,6 +16,10 @@ def is_valid_last_name(last_name):
 def is_valid_email(email):
     pattern = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
     return re.match(pattern, email) is not None
+
+def is_valid_number(phone_number):
+    pattern = r"^\+?[0-9]\d{7,14}$"
+    return re.match(pattern,phone_number) is not None
 
 def is_valid_birth_year(birth_year):
     birth_year = int(birth_year)
@@ -54,48 +57,61 @@ def is_repeated_password(repeatpassword, passwrd):
             return False
     return True
 
-first_name = input("Please enter your first name.\n")
-if not is_valid_first_name(first_name):
-    print(f"{first_name} is not a valid first name.\n")
-    while not is_valid_first_name(first_name):
-        first_name = input("Please enter a valid first name.\n")
+def new_user_recursive():
+    first_name = input("Please enter your first name.\n")
+    if not is_valid_first_name(first_name):
+        print(f"{first_name} is not a valid first name.\n")
+        while not is_valid_first_name(first_name):
+            first_name = input("Please enter a valid first name.\n")
+    database.add_first_name(first_name)
 
-last_name = input("Please enter your last name.\n")
-if not is_valid_last_name(last_name):
-    print(f"{last_name} is not a valid last name.")
-    while not is_valid_last_name(last_name):
-        last_name = input("Please enter a valid last name.\n")
+    last_name = input("Please enter your last name.\n")
+    if not is_valid_last_name(last_name):
+        print(f"{last_name} is not a valid last name.")
+        while not is_valid_last_name(last_name):
+            last_name = input("Please enter a valid last name.\n")
+    database.add_last_name(last_name)
 
-email = input("Please enter a valid email address.\n")
-database.email_check(email)
-if not is_valid_email(email):
-    print(f"{email} is not a valid email address.\n")
-    while not is_valid_email(email):
-        email = input("Please enter a valid email.\n")
+    email = input("Please enter a valid email address.\n")
+    email = database.email_check(email)
+    if not is_valid_email(email):
+        print(f"{email} is not a valid email address.\n")
+        while not is_valid_email(email):
+            email = input("Please enter a valid email.\n")
+    database.add_email(email)
 
-birth_year = input("Please enter your birth year.\n")
-if is_valid_birth_year(birth_year) == 0:
-        print(f"{birth_year} is not a valid birth year.\n")
-        while is_valid_birth_year(birth_year) == 0:
-            birth_year = input("Please enter a valid birth year.\n")
+    phone_number = input("Please enter a valid phone number.\n")
+    if not is_valid_number(phone_number):
+        print(f"{phone_number} is not a valid phone number.\n")
+        while not is_valid_number(phone_number):
+            email = input("Please enter a valid phone number.\n")
+    database.add_number(phone_number)
 
-password = input("Enter a password.\n")
-if not is_secure_password(password):
-        while not is_secure_password(password):
-            password = input("Please enter a secure password.\n")
+    birth_year = input("Please enter your birth year.\n")
+    if is_valid_birth_year(birth_year) == 0:
+            print(f"{birth_year} is not a valid birth year.\n")
+            while is_valid_birth_year(birth_year) == 0:
+                birth_year = input("Please enter a valid birth year.\n")
+    database.add_birth_year(birth_year)
 
-repeatPassword = input("Re-enter password.\n")
-if not is_repeated_password(repeatPassword, password):
-        while not is_repeated_password(repeatPassword, password):
-            repeatPassword = input("Passwords must match, please try again.\n")
+    password = input("Enter a password.\n")
+    if not is_secure_password(password):
+            while not is_secure_password(password):
+                password = input("Please enter a secure password.\n")
+    database.add_password(password)
 
-terms = input("Do you agree to our terms and conditions?\n")
-terms = terms.lower()
-if terms.__contains__('y'):
-    print("Your account has been created, please login.\n")
-    database.add_data()
-else:
-    print("We are unable to create your account.\n")
+    repeatPassword = input("Re-enter password.\n")
+    if not is_repeated_password(repeatPassword, password):
+            while not is_repeated_password(repeatPassword, password):
+                repeatPassword = input("Passwords must match, please try again.\n")
+
+    terms = input("Do you agree to our terms and conditions?\n")
+    terms = terms.lower()
+    if terms.__contains__('y'):
+        print("Your account has been created, please login.\n")
+        base.welcome()
+    else:
+        print("We are unable to create your account.\n")
 
 
 

@@ -3,19 +3,36 @@ import signup
 first_name_list = list()
 last_name_list = list()
 email_list = list()
+number_list = list()
 birth_year_list = list()
 password_list = list()
+users = first_name_list.__sizeof__()
 
 def email_check(email):
-    if email_list.__contains__(signup.email):
+    if email_list.__contains__(email):
         print("An account with this email already exists.\n")
-        signup.email = " "
-def add_data():
-    first_name_list.append(signup.first_name)
-    last_name_list.append(signup.last_name)
-    email_list.append(signup.email)
-    birth_year_list.append(signup.birth_year)
-    password_list.append(signup.password)
+        email = " "
+    return email
+def add_first_name(first_name):
+    first_name_list.append(first_name)
 
-    print(first_name_list, last_name_list, email_list, birth_year_list, password_list)
+def add_last_name(last_name):
+    last_name_list.append(last_name)
+
+def add_email(email):
+    email_list.append(email)
+
+def add_number(number):
+    number_list.append(number)
+
+def add_birth_year(year):
+    birth_year_list.append(year)
+
+def add_password(password):
+    password_list.append(password)
+
+    print(first_name_list, last_name_list, email_list, number_list, birth_year_list, password_list, users)
+
+
+
 
