@@ -6,7 +6,6 @@ email_list = list()
 number_list = list()
 birth_year_list = list()
 password_list = list()
-users = first_name_list.__sizeof__()
 
 def email_check(email):
     if email_list.__contains__(email):
@@ -31,7 +30,6 @@ def add_birth_year(year):
 def add_password(password):
     password_list.append(password)
 
-    print(first_name_list, last_name_list, email_list, number_list, birth_year_list, password_list, users)
 
 
 
